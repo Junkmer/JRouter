@@ -34,6 +34,7 @@ dependencies {
 
     //添加 路由库 依赖
     implementation project(path: ':jrouter')
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

@@ -33,9 +33,9 @@ public class JRouter {
         return router;
     }
 
-    private static final Map<String, String> routerMap = new HashMap<>();
-
     private static Context context;
+
+    private static final Map<String, String> routerMap = new HashMap<>();
 
     private static boolean initialized = false;
 
@@ -44,13 +44,10 @@ public class JRouter {
 
     public synchronized static void init(Context context) {
         if (initialized) {
+            Log.e(TAG, "This initialization failed, because has been initialized.");
             return;
         }
         JRouter.context = context;
-        if (context == null) {
-            Log.e(TAG, "init failed, context is null.");
-            return;
-        }
         initRouter(context);
         initialized = true;
     }
@@ -61,7 +58,10 @@ public class JRouter {
         return navigation;
     }
 
-    static class Navigation {
+    public static class Navigation {
+        /**
+         * 需要跳转的 Activity 路径
+         */
         String destination;
         Bundle options;
         Intent intent = new Intent();
@@ -333,8 +333,7 @@ public class JRouter {
         }
     }
 
-
-    public static void initRouter(Context context) {
+    private static void initRouter(Context context) {
         ActivityInfo[] activityInfos = null;
         List<String> activityNames = new ArrayList<>();
         PackageManager packageManager = context.getPackageManager();
@@ -353,9 +352,5 @@ public class JRouter {
             String[] splitStr = activityName.split("\\.");
             routerMap.put(splitStr[splitStr.length - 1], activityName);
         }
-    }
-
-    public static Context getContext() {
-        return context;
     }
 }
