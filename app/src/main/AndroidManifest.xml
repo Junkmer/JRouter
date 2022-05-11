@@ -14,7 +14,7 @@
             android:name=".example.SecondActivity"
             android:exported="false" />
         <activity
-            android:name=".example.OnceActivity"
+            android:name=".example.FirstActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

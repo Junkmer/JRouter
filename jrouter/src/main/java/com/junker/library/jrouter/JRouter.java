@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
@@ -268,11 +269,11 @@ public class JRouter {
 
         // 使用传入的 Fragment 启动 Activity
         public void navigate(Fragment fragment) {
-            navigate(fragment, -1);
+            navigate(fragment, null);
         }
 
         // 使用传入的 Fragment 启动 Activity，并返回接收返回结果
-        public void navigate(Fragment fragment, int requestCode) {
+        public void navigate(Fragment fragment, ActivityResultLauncher<Intent> callBack) {
             if (!initialized) {
                 Log.e(TAG, "have not initialized.");
                 return;
@@ -283,13 +284,9 @@ public class JRouter {
             }
             try {
                 if (fragment != null) {
-                    if (requestCode >= 0) {
-                        fragment.startActivityForResult(intent, requestCode);
-                    } else {
-                        fragment.startActivity(intent, options);
-                    }
+                    callBack.launch(intent);
                 } else {
-                    startActivity(null, requestCode);
+                    startActivity(null, 0);
                 }
             } catch (ActivityNotFoundException e) {
                 e.printStackTrace();

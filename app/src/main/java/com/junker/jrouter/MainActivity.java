@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initView();
+
     }
 
     private void initView(){
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JRouter.Navigation navigation = JRouter.getInstance().setDestination("OnceActivity");
+                JRouter.Navigation navigation = JRouter.getInstance().setDestination("FirstActivity");
                 navigation.navigate();
             }
         });
