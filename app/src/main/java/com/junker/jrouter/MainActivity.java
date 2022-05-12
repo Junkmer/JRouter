@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 JRouter.Navigation navigation = JRouter.getInstance().setDestination("FirstActivity");
-                navigation.navigate(MainActivity.this,launcher);
+                navigation.navigate();
+//                navigation.navigate(MainActivity.this,launcher);
             }
         });
     }

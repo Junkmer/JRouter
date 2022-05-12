@@ -33,13 +33,13 @@ public class FirstFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                JRouter.Navigation navigation = JRouter.getInstance().setDestination("SecondActivity");
-//                navigation.navigate(launcher);
+                JRouter.Navigation navigation = JRouter.getInstance().setDestination("SecondActivity");
+                navigation.navigate(launcher);
 
-                Intent intent = new Intent();
-                intent.putExtra("data", "我是从 firstFragment 返回的数据");
-                getActivity().setResult(RESULT_OK, intent);
-                getActivity().finish();
+//                Intent intent = new Intent();
+//                intent.putExtra("data", "我是从 firstFragment 返回的数据");
+//                getActivity().setResult(RESULT_OK, intent);
+//                getActivity().finish();
             }
         });
         return view;
