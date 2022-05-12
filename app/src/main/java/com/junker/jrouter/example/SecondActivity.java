@@ -26,7 +26,7 @@ public class SecondActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.putExtra("data", textView.getText().toString());
+                intent.putExtra("data", "我是从 SecondActivity 返回的数据");
                 setResult(RESULT_OK, intent);
                 finish();
             }

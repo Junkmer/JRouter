@@ -257,44 +257,23 @@ public class JRouter {
             return this.intent;
         }
 
-        // 使用默认的 ApplicationContext 启动 Activity
+        // 使用默认的 ApplicationContext 启动 Activity，不返回结果
         public void navigate() {
             navigate((Context) null);
         }
 
-        // 使用传入的 Context 启动 Activity
+        // 使用默认的 ApplicationContext 启动 Activity，并返回-接收返回结果
+        public void navigate(ActivityResultLauncher<Intent> callBack) {
+            navigate(null, callBack);
+        }
+
+        // 使用传入的 Context 启动 Activity，不返回结果
         public void navigate(Context context) {
-            navigate(context, -1);
-        }
-
-        // 使用传入的 Fragment 启动 Activity
-        public void navigate(Fragment fragment) {
-            navigate(fragment, null);
-        }
-
-        // 使用传入的 Fragment 启动 Activity，并返回接收返回结果
-        public void navigate(Fragment fragment, ActivityResultLauncher<Intent> callBack) {
-            if (!initialized) {
-                Log.e(TAG, "have not initialized.");
-                return;
-            }
-            if (intent == null) {
-                Log.e(TAG, "intent is null.");
-                return;
-            }
-            try {
-                if (fragment != null) {
-                    callBack.launch(intent);
-                } else {
-                    startActivity(null, 0);
-                }
-            } catch (ActivityNotFoundException e) {
-                e.printStackTrace();
-            }
+            navigate(context, null);
         }
 
         // 使用传入的 Context 启动 Activity，并返回接收返回结果
-        public void navigate(Context context, int requestCode) {
+        public void navigate(Context context, ActivityResultLauncher<Intent> callBack) {
             if (!initialized) {
                 Log.e(TAG, "have not initialized.");
                 return;
@@ -307,17 +286,21 @@ public class JRouter {
             if (context == null) {
                 startContext = JRouter.context;
             }
-            startActivity(startContext, requestCode);
+            startActivity(startContext, callBack);
         }
 
-        private void startActivity(Context context, int requestCode) {
+        private void startActivity(Context context, ActivityResultLauncher<Intent> callBack) {
             if (context == null) {
                 Log.e(TAG, "StartActivity failed, context is null.Please init");
                 return;
             }
             try {
-                if (context instanceof Activity && requestCode >= 0) {
-                    ActivityCompat.startActivityForResult((Activity) context, intent, requestCode, options);
+                if (callBack != null) {
+                    if (options != null){
+                        intent.putExtras(options);
+                    }
+                    //startActivityForResult 已废弃，通过 ActivityResultLauncher 跳转 activity
+                    callBack.launch(intent);
                 } else {
                     if (!(context instanceof Activity)) {
                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
